@@ -1,0 +1,741 @@
+<html><head><base href="https://teacherhelper.edu/app/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>雙語教師小幫手 - 多功能版</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<style>
+  :root {
+    --primary-color: #4a90e2;
+    --secondary-color: #f39c12;
+    --background-color: #f5f7fa;
+    --text-color: #333;
+    --button-hover-color: #3498db;
+    --used-button-color: #e74c3c;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+    margin: 0;
+    color: var(--primary-color);
+  }
+
+  #current-phrase {
+    font-size: 18px;
+    padding: 10px;
+    background-color: #f1f3f5;
+    border-radius: 5px;
+    margin-left: 20px;
+    flex-grow: 1;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  #current-phrase .en {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  #current-phrase .zh {
+    font-size: 16px;
+    opacity: 0.8;
+  }
+
+  .main-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .main-button {
+    flex: 1 1 calc(25% - 15px);
+    min-width: 150px;
+    padding: 15px;
+    font-size: 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .main-button:hover {
+    background-color: var(--button-hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .main-button.used {
+    background-color: var(--used-button-color);
+  }
+
+  .main-button i {
+    margin-right: 10px;
+  }
+
+  .phrases {
+    display: none;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .phrase-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    background-color: #f1f3f5;
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+  }
+
+  .phrase-button:hover {
+    background-color: #e9ecef;
+    transform: translateY(-2px);
+  }
+
+  .phrase-button.used {
+    background-color: #ffeaa7;
+  }
+
+  .phrase-text {
+    flex: 1;
+  }
+
+  .speak-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+  }
+
+  .speak-button:hover {
+    background-color: #2980b9;
+  }
+
+  .edit-mode {
+    margin-top: 40px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .edit-mode select,
+  .edit-mode input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .edit-mode button {
+    padding: 12px 20px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    margin-right: 10px;
+  }
+
+  .edit-mode button:hover {
+    background-color: #e67e22;
+    transform: translateY(-2px);
+  }
+
+  #edit-list {
+    margin-top: 20px;
+  }
+
+  #edit-list div {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  #edit-list input {
+    flex: 1;
+  }
+
+  #edit-list button {
+    background-color: #e74c3c;
+  }
+
+  #edit-list button:hover {
+    background-color: #c0392b;
+  }
+
+  #voice-settings {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f1f3f5;
+    border-radius: 5px;
+  }
+
+  #voice-settings select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  #dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #dark-mode-toggle:hover {
+    background-color: var(--button-hover-color);
+  }
+
+  #reset-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  #reset-button:hover {
+    background-color: #e67e22;
+    transform: scale(1.1);
+  }
+
+  #save-changes {
+    background-color: #27ae60;
+  }
+
+  #save-changes:hover {
+    background-color: #2ecc71;
+  }
+
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    background-color: #2ecc71;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .notification.show {
+    opacity: 1;
+  }
+
+  body.dark-mode {
+    --primary-color: #3498db;
+    --secondary-color: #f39c12;
+    --background-color: #2c3e50;
+    --text-color: #ecf0f1;
+    --button-hover-color: #2980b9;
+    --used-button-color: #c0392b;
+  }
+
+  body.dark-mode .container,
+  body.dark-mode .phrases,
+  body.dark-mode .edit-mode,
+  body.dark-mode #voice-settings {
+    background-color: #34495e;
+    color: var(--text-color);
+  }
+
+  body.dark-mode .phrase-button {
+    background-color: #2c3e50;
+    color: var(--text-color);
+  }
+
+  body.dark-mode .phrase-button:hover {
+    background-color: #243342;
+  }
+
+  body.dark-mode .phrase-button.used {
+    background-color: #d35400;
+  }
+
+  body.dark-mode #current-phrase {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    #current-phrase {
+      margin-left: 0;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .main-button {
+      flex: 1 1 calc(50% - 15px);
+    }
+
+    .header h1 {
+      font-size: 20px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1><i class="fas fa-chalkboard-teacher"></i> 雙語教師小幫手</h1>
+    <div id="current-phrase">
+      <div class="en"></div>
+      <div class="zh"></div>
+    </div>
+  </div>
+
+  <div class="main-buttons">
+    <button class="main-button" data-target="start-lesson"><i class="fas fa-play"></i> 開始課程</button>
+    <button class="main-button" data-target="self-intro"><i class="fas fa-user"></i> 自我介紹</button>
+    <button class="main-button" data-target="begin-class"><i class="fas fa-book-open"></i> 開始上課</button>
+    <button class="main-button" data-target="tidy-desk"><i class="fas fa-broom"></i> 整理課桌</button>
+    <button class="main-button" data-target="roll-call"><i class="fas fa-clipboard-list"></i> 點名</button>
+    <button class="main-button" data-target="late"><i class="fas fa-clock"></i> 遲到</button>
+    <button class="main-button" data-target="class-instructions"><i class="fas fa-bullhorn"></i> 課堂指示</button>
+    <button class="main-button" data-target="other-instructions"><i class="fas fa-comment"></i> 其他指示</button>
+  </div>
+
+  <div id="start-lesson" class="phrases"></div>
+  <div id="self-intro" class="phrases"></div>
+  <div id="begin-class" class="phrases"></div>
+  <div id="tidy-desk" class="phrases"></div>
+  <div id="roll-call" class="phrases"></div>
+  <div id="late" class="phrases"></div>
+  <div id="class-instructions" class="phrases"></div>
+  <div id="other-instructions" class="phrases"></div>
+
+  <div class="edit-mode">
+    <h3><i class="fas fa-edit"></i> 編輯模式</h3>
+    <select id="category-select">
+      <option value="start-lesson">開始課程</option>
+      <option value="self-intro">自我介紹</option>
+      <option value="begin-class">開始上課</option>
+      <option value="tidy-desk">整理課桌</option>
+      <option value="roll-call">點名</option>
+      <option value="late">遲到</option>
+      <option value="class-instructions">課堂指示</option>
+      <option value="other-instructions">其他指示</option>
+    </select>
+    <input type="text" id="en-phrase" placeholder="英文短語">
+    <input type="text" id="zh-phrase" placeholder="中文翻譯">
+    <button id="add-phrase"><i class="fas fa-plus"></i> 新增短語</button>
+    <button id="save-changes"><i class="fas fa-save"></i> 儲存變更</button>
+    <div id="edit-list"></div>
+  </div>
+
+  <div id="voice-settings">
+    <h3><i class="fas fa-volume-up"></i> 語音設置</h3>
+    <select id="voice-select"></select>
+  </div>
+</div>
+
+<button id="dark-mode-toggle"><i class="fas fa-moon"></i></button>
+<button id="reset-button" title="重置所有按鈕狀態"><i class="fas fa-redo"></i></button>
+
+<div id="notification" class="notification"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const mainButtons = document.querySelectorAll('.main-button');
+  const categorySelect = document.getElementById('category-select');
+  const enPhraseInput = document.getElementById('en-phrase');
+  const zhPhraseInput = document.getElementById('zh-phrase');
+  const addPhraseButton = document.getElementById('add-phrase');
+  const editList = document.getElementById('edit-list');
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  const resetButton = document.getElementById('reset-button');
+  const currentPhrase = document.getElementById('current-phrase');
+  const saveChangesButton = document.getElementById('save-changes');
+  const notification = document.getElementById('notification');
+
+  let phrases = JSON.parse(localStorage.getItem('phrases')) || {
+    'start-lesson': [
+      { en: "Hello, everyone.", zh: "大家好。" },
+      { en: "Good morning, everybody.", zh: "大家早安。" },
+      { en: "How are you today?", zh: "你們今天好嗎？" },
+      { en: "How's life?", zh: "近況如何？" },
+      { en: "Let's begin today's lesson.", zh: "我們開始今天的課程吧。" },
+      { en: "I think we can start now.", zh: "我想我們現在可以開始了。" },
+      { en: "Are you ready for class?", zh: "你們準備好上課了嗎？" }
+    ],
+    'self-intro': [
+      { en: "My name is Mr/Mrs/Ms Smith. I'll be teaching you this year.", zh: "我叫史密斯先生/太太/小姐，今年將教你們。" },
+      { en: "I'm your new teacher.", zh: "我是你們的新老師。" },
+      { en: "I've got five lessons with you each week.", zh: "我每週有五節課要教你們。" },
+      { en: "I look forward to working with you all.", zh: "我期待與你們一起學習。" }
+    ],
+    'begin-class': [
+      { en: "Let's begin our lesson now.", zh: "我們現在開始上課。" },
+      { en: "Is everybody ready to start?", zh: "大家都準備好了嗎？" },
+      { en: "Now we can get down to work.", zh: "現在我們可以開始學習了。" },
+      { en: "Let's review what we learned last time.", zh: "讓我們復習上次學的內容。" }
+    ],
+    'tidy-desk': [
+      { en: "Put your things away.", zh: "把你們的東西收起來。" },
+      { en: "Close your books.", zh: "關上你們的書。" },
+      { en: "Pack your things away.", zh: "把你們的東西收拾好。" },
+      { en: "Make sure your desk is clear.", zh: "確保你的桌面是乾淨的。" }
+    ],
+    'roll-call': [
+      { en: "Who isn't here today?", zh: "今天有誰不在？" },
+      { en: "Who is absent today?", zh: "今天有誰缺席？" },
+      { en: "Why were you absent last Friday, Tom?", zh: "湯姆，上週五你為什麼缺席？" },
+      { en: "Is everyone present?", zh: "所有人都到齊了嗎？" }
+    ],
+    'late': [
+      { en: "We started ten minutes ago.", zh: "我們已經開始十分鐘了。" },
+      { en: "Did you oversleep?", zh: "你是不是睡過頭了？" },
+      { en: "Don't let it happen again.", zh: "別再讓這種事發生了。" },
+      { en: "Please try to be on time next time.", zh: "下次請努力準時到達。" }
+    ],
+    'class-instructions': [
+      { en: "Are you ready?", zh: "你們準備好了嗎？" },
+      { en: "Everybody, pay attention.", zh: "大家注意聽。" },
+      { en: "Open your books at page...", zh: "翻到...頁。" },
+      { en: "You have five minutes to do this.", zh: "你們有五分鐘時間完成這個任務。" },
+      { en: "Turn to page...", zh: "翻到...頁。" },
+      { en: "Look at activity five.", zh: "看一下第五個活動。" },
+      { en: "Listen to this recording.", zh: "聽這段錄音。" },
+      { en: "Repeat after me.", zh: "跟我重複。" }
+    ],
+    'other-instructions': [
+      { en: "Come in.", zh: "進來。" },
+      { en: "Go out.", zh: "出去。" },
+      { en: "Stand by your desks.", zh: "站在你們的桌子旁邊。" },
+      { en: "Stand up.", zh: "站起來。" },
+      { en: "Sit down.", zh: "坐下。" },
+      { en: "Come to the front of the class.", zh: "來到教室前面。" },
+      { en: "Put your hands up.", zh: "舉起你們的手。" },
+      { en: "Put your hands down.", zh: "放下你們的手。" },
+      { en: "Form groups of four.", zh: "分成四人一組。" },
+      { en: "Work in pairs.", zh: "兩人一組工作。" }
+    ]
+  };
+
+  const synth = window.speechSynthesis;
+  let voices = [];
+
+  function savePhrases() {
+    localStorage.setItem('phrases', JSON.stringify(phrases));
+  }
+
+  function populateVoiceList() {
+    voices = synth.getVoices().filter(voice => voice.lang.startsWith('en'));
+    const voiceSelect = document.getElementById('voice-select');
+    voiceSelect.innerHTML = '';
+    voices.forEach((voice, i) => {
+      const option = document.createElement('option');
+      option.textContent = `${voice.name} (${voice.lang})`;
+      option.setAttribute('data-voice-index', i);
+      voiceSelect.appendChild(option);
+    });
+  }
+
+  populateVoiceList();
+  if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = populateVoiceList;
+  }
+
+  function speak(text) {
+    if (synth.speaking) {
+      console.error('speechSynthesis.speaking');
+      return;
+    }
+    if (text !== '') {
+      const utterThis = new SpeechSynthesisUtterance(text);
+      const selectedOption = document.getElementById('voice-select').selectedOptions[0];
+      const selectedIndex = selectedOption.getAttribute('data-voice-index');
+      utterThis.voice = voices[selectedIndex];
+      utterThis.pitch = 1;
+      utterThis.rate = 1;
+      synth.speak(utterThis);
+    }
+  }
+
+  function showPhrase(en, zh) {
+    currentPhrase.querySelector('.en').textContent = en;
+    currentPhrase.querySelector('.zh').textContent = zh;
+    
+    currentPhrase.style.transform = 'scale(1.05)';
+    currentPhrase.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+    setTimeout(() => {
+      currentPhrase.style.transform = 'scale(1)';
+      currentPhrase.style.boxShadow = 'none';
+    }, 300);
+  }
+
+  function renderPhrases() {
+    Object.keys(phrases).forEach(category => {
+      const phraseContainer = document.getElementById(category);
+      phraseContainer.innerHTML = '';
+      phrases[category].forEach((phrase, index) => {
+        const button = document.createElement('button');
+        button.className = 'phrase-button';
+        button.setAttribute('data-en', phrase.en);
+        button.setAttribute('data-zh', phrase.zh);
+        button.innerHTML = `
+          <span class="phrase-text">
+            <strong>${phrase.en}</strong><br>${phrase.zh}
+          </span>
+          <button class="speak-button" title="播放語音">
+            <i class="fas fa-volume-up"></i>
+          </button>
+        `;
+        button.addEventListener('click', function(e) {
+          if (e.target.classList.contains('speak-button') || e.target.closest('.speak-button')) {
+            speak(phrase.en);
+          } else {
+            showPhrase(phrase.en, phrase.zh);
+            this.classList.add('used');
+            saveResetState();
+          }
+        });
+        phraseContainer.appendChild(button);
+      });
+    });
+  }
+
+  function renderEditList() {
+    const category = categorySelect.value;
+    editList.innerHTML = '';
+    phrases[category].forEach((phrase, index) => {
+      const div = document.createElement('div');
+      div.innerHTML = `
+        <input type="text" value="${phrase.en}" data-index="${index}" data-lang="en">
+        <input type="text" value="${phrase.zh}" data-index="${index}" data-lang="zh">
+        <button class="delete-phrase" data-index="${index}"><i class="fas fa-trash"></i></button>
+      `;
+      editList.appendChild(div);
+    });
+  }
+
+  function showNotification(message) {
+    notification.textContent = message;
+    notification.classList.add('show');
+    setTimeout(() => {
+      notification.classList.remove('show');
+    }, 3000);
+  }
+
+  mainButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const targetId = this.getAttribute('data-target');
+      document.querySelectorAll('.phrases').forEach(phrase => {
+        phrase.style.display = 'none';
+      });
+      document.getElementById(targetId).style.display = 'block';
+      this.classList.add('used');
+      saveResetState();
+    });
+  });
+
+  categorySelect.addEventListener('change', renderEditList);
+
+  addPhraseButton.addEventListener('click', function() {
+    const category = categorySelect.value;
+    const en = enPhraseInput.value.trim();
+    const zh = zhPhraseInput.value.trim();
+    if (en && zh) {
+      phrases[category].push({ en, zh });
+      renderEditList();
+      enPhraseInput.value = '';
+      zhPhraseInput.value = '';
+      showNotification('新短語已添加');
+    }
+  });
+
+  editList.addEventListener('input', function(e) {
+    if (e.target.tagName === 'INPUT') {
+      const category = categorySelect.value;
+      const index = e.target.getAttribute('data-index');
+      const lang = e.target.getAttribute('data-lang');
+      phrases[category][index][lang] = e.target.value;
+    }
+  });
+
+  editList.addEventListener('click', function(e) {
+    if (e.target.classList.contains('delete-phrase') || e.target.closest('.delete-phrase')) {
+      const category = categorySelect.value;
+      const index = e.target.closest('.delete-phrase').getAttribute('data-index');
+      phrases[category].splice(index, 1);
+      renderEditList();
+      showNotification('短語已刪除');
+    }
+  });
+
+  saveChangesButton.addEventListener('click', function() {
+    savePhrases();
+    renderPhrases();
+    showNotification('變更已儲存');
+  });
+
+  darkModeToggle.addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+    const icon = this.querySelector('i');
+    if (document.body.classList.contains('dark-mode')) {
+      icon.classList.remove('fa-moon');
+      icon.classList.add('fa-sun');
+    } else {
+      icon.classList.remove('fa-sun');
+      icon.classList.add('fa-moon');
+    }
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+  });
+
+  resetButton.addEventListener('click', function() {
+    document.querySelectorAll('.main-button, .phrase-button').forEach(button => {
+      button.classList.remove('used');
+    });
+    document.querySelectorAll('.phrases').forEach(phrase => {
+      phrase.style.display = 'none';
+    });
+    currentPhrase.querySelector('.en').textContent = '';
+    currentPhrase.querySelector('.zh').textContent = '';
+    saveResetState();
+
+    showNotification('所有按鈕狀態已重置');
+  });
+
+  function saveResetState() {
+    const resetState = {
+      mainButtons: Array.from(document.querySelectorAll('.main-button')).map(button => button.classList.contains('used')),
+      phraseButtons: Array.from(document.querySelectorAll('.phrase-button')).map(button => button.classList.contains('used')),
+      phrasesDisplay: Array.from(document.querySelectorAll('.phrases')).map(phrase => phrase.style.display),
+      currentPhrase: {
+        en: currentPhrase.querySelector('.en').textContent,
+        zh: currentPhrase.querySelector('.zh').textContent
+      }
+    };
+    localStorage.setItem('resetState', JSON.stringify(resetState));
+  }
+
+  function loadResetState() {
+    const savedState = localStorage.getItem('resetState');
+    if (savedState) {
+      const resetState = JSON.parse(savedState);
+      
+      document.querySelectorAll('.main-button').forEach((button, index) => {
+        if (resetState.mainButtons[index]) {
+          button.classList.add('used');
+        } else {
+          button.classList.remove('used');
+        }
+      });
+
+      document.querySelectorAll('.phrase-button').forEach((button, index) => {
+        if (resetState.phraseButtons[index]) {
+          button.classList.add('used');
+        } else {
+          button.classList.remove('used');
+        }
+      });
+
+      document.querySelectorAll('.phrases').forEach((phrase, index) => {
+        phrase.style.display = resetState.phrasesDisplay[index];
+      });
+
+      currentPhrase.querySelector('.en').textContent = resetState.currentPhrase.en;
+      currentPhrase.querySelector('.zh').textContent = resetState.currentPhrase.zh;
+    }
+  }
+
+  if (localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark-mode');
+    darkModeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+  }
+
+  renderPhrases();
+  renderEditList();
+  loadResetState();
+});
+</script>
+</body></html>
